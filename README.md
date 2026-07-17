@@ -19,3 +19,11 @@ Convert Markdown to Backlog wiki format.
 ```
 > Convert RELEASE_NOTES.md to Backlog wiki format, save as RELEASE_NOTES.txt
 ```
+
+### google-chat-md-convert
+
+Convert Markdown to Google Chat formatting.
+
+```
+> Convert RELEASE_NOTES.md for Google Chat, save as gc_RELEASE_NOTES.txt
+```
