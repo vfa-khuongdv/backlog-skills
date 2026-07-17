@@ -9,7 +9,7 @@ AI agent skills collection. Installable via `npx skills add vfa-khuongdv/backlog
 Create bilingual English-Japanese Backlog wiki from an existing text file.
 
 ```
-> Convert README.txt to Backlog wiki format, add **English and **Japanese sections
+> Convert README.MD to Backlog wiki format, add **English and **Japanese sections
 ```
 
 ### backlog-md-convert
