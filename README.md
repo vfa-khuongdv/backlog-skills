@@ -4,5 +4,18 @@ AI agent skills collection. Installable via `npx skills add vfa-khuongdv/backlog
 
 ## Skills
 
-- **[backlog-add-japanese](./skills/backlog-add-japanese/SKILL.md)** — Add **English and **Japanese sections to Backlog-formatted content. Japanese-localized version of English Backlog wiki.
-- **[backlog-md-convert](./skills/backlog-md-convert/SKILL.md)** — Convert standard Markdown to Backlog proprietary wiki formatting syntax.
+### backlog-add-japanese
+
+Create bilingual English-Japanese Backlog wiki from an existing text file.
+
+```
+> Translate README.txt to Japanese, keep Backlog wiki format, add **English and **Japanese sections
+```
+
+### backlog-md-convert
+
+Convert Markdown to Backlog wiki format.
+
+```
+> Convert RELEASE_NOTES.md to Backlog wiki format, save as RELEASE_NOTES.txt
+```
