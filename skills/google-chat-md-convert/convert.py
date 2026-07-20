@@ -21,6 +21,8 @@ def convert_heading(line: str) -> str:
     match = re.match(r'^(#{1,6})\s+(.+)$', line)
     if match:
         text = match.group(2)
+        text = re.sub(r'\*\*\*(.+?)\*\*\*', r'\1', text)
+        text = re.sub(r'___(.+?)___', r'\1', text)
         text = re.sub(r'\*\*(.+?)\*\*', r'\1', text)
         text = re.sub(r'__(.+?)__', r'\1', text)
         text = re.sub(r'~~(.+?)~~', r'\1', text)
@@ -46,6 +48,14 @@ def convert_strikethrough(line: str) -> str:
     return re.sub(r'~~(.+?)~~', r'~\1~', line)
 
 
+def convert_bold_italic(line: str) -> str:
+    """Convert ***text*** or ___text___ (bold+italic) to _text_ (italic only).
+    Google Chat doesn't support nested formatting, so bold+italic is simplified."""
+    line = re.sub(r'\*\*\*(.+?)\*\*\*', r'_\1_', line)
+    line = re.sub(r'___(.+?)___', r'_\1_', line)
+    return line
+
+
 def convert_link(line: str) -> str:
     return re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'\1 (\2)', line)
 
@@ -54,13 +64,34 @@ def convert_image(line: str) -> str:
     return re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'\1 (\2)', line)
 
 
+_URL_PLACEHOLDERS = []
+
+
+def _protect_urls_before_format(line: str) -> str:
+    """Replace (url) portions with placeholders to prevent formatting mangle."""
+    _URL_PLACEHOLDERS.clear()
+    def _save(m):
+        _URL_PLACEHOLDERS.append(m.group(0))
+        return f'\x00U{len(_URL_PLACEHOLDERS) - 1}\x00'
+    return re.sub(r'\(https?://[^\)]+\)', _save, line)
+
+
+def _restore_urls_after_format(line: str) -> str:
+    """Restore url placeholders after formatting applied."""
+    for i, url in enumerate(_URL_PLACEHOLDERS):
+        line = line.replace(f'\x00U{i}\x00', url)
+    return line
+
+
 def convert_inline_formatting(line: str) -> str:
     line = convert_image(line)
     line = convert_link(line)
+    line = _protect_urls_before_format(line)
+    line = convert_bold_italic(line)
     line = convert_italic(line)
     line = convert_bold(line)
     line = convert_strikethrough(line)
-    return line
+    return _restore_urls_after_format(line)
 
 
 def is_horizontal_rule(line: str) -> bool:

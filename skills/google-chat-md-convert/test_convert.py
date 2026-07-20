@@ -9,6 +9,7 @@ from convert import (
     convert_bold,
     convert_italic,
     convert_strikethrough,
+    convert_bold_italic,
     convert_link,
     convert_image,
     convert_inline_formatting,
@@ -89,6 +90,20 @@ class TestConvertStrikethrough(unittest.TestCase):
         self.assertEqual(convert_strikethrough('plain text'), 'plain text')
 
 
+class TestConvertBoldItalic(unittest.TestCase):
+    def test_triple_asterisk(self):
+        self.assertEqual(convert_bold_italic('***text***'), '_text_')
+
+    def test_triple_underscore(self):
+        self.assertEqual(convert_bold_italic('___text___'), '_text_')
+
+    def test_in_sentence(self):
+        self.assertEqual(convert_bold_italic('this is ***bold italic*** here'), 'this is _bold italic_ here')
+
+    def test_no_match(self):
+        self.assertEqual(convert_bold_italic('**bold** *italic*'), '**bold** *italic*')
+
+
 class TestConvertLink(unittest.TestCase):
     def test_basic_link(self):
         self.assertEqual(convert_link('[text](url)'), 'text (url)')
@@ -117,9 +132,24 @@ class TestConvertInlineFormatting(unittest.TestCase):
         expected = '*bold* _italic_ ~struck~ link (url) img (img.png)'
         self.assertEqual(result, expected)
 
+    def test_bold_italic_inline_formatting(self):
+        result = convert_inline_formatting('***bold italic*** text')
+        expected = '_bold italic_ text'
+        self.assertEqual(result, expected)
+
     def test_image_before_link(self):
         result = convert_inline_formatting('[text](url) ![](img.png)')
         expected = 'text (url)  (img.png)'
+        self.assertEqual(result, expected)
+
+    def test_url_with_special_chars_not_mangled(self):
+        result = convert_inline_formatting('[docs](http://a*b*c.com)')
+        expected = 'docs (http://a*b*c.com)'
+        self.assertEqual(result, expected)
+
+    def test_bold_inside_link(self):
+        result = convert_inline_formatting('[**bold** link](url)')
+        expected = '*bold* link (url)'
         self.assertEqual(result, expected)
 
 
@@ -284,6 +314,21 @@ class TestConvertMarkdownToGoogleChat(unittest.TestCase):
     def test_bold_italic_strikethrough_combined(self):
         md = '**bold** *italic* ~~struck~~ together'
         expected = '*bold* _italic_ ~struck~ together'
+        self.assertEqual(convert_markdown_to_google_chat(md), expected)
+
+    def test_bold_italic_triple_stars(self):
+        md = '***bold italic*** text'
+        expected = '_bold italic_ text'
+        self.assertEqual(convert_markdown_to_google_chat(md), expected)
+
+    def test_url_with_special_chars(self):
+        md = 'see [docs](http://a*b*c.com) here'
+        expected = 'see docs (http://a*b*c.com) here'
+        self.assertEqual(convert_markdown_to_google_chat(md), expected)
+
+    def test_plus_list_marker(self):
+        md = '+ item1\n+ item2'
+        expected = '+ item1\n+ item2'
         self.assertEqual(convert_markdown_to_google_chat(md), expected)
 
 

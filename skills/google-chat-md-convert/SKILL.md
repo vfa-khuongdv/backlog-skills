@@ -25,9 +25,10 @@ cat input.md | python3 convert.py
 | `~~text~~` | `~text~` | Strikethrough |
 | `` `code` `` | `` `code` `` | Inline code (unchanged) |
 | ``` ```code``` ``` | ``` ```code``` ``` | Code block (unchanged) |
-| `- ` / `* ` list | `- ` / `* ` | Unordered list (unchanged) |
+| `***text***` / `___text___` | `_text_` (italic) | Bold+italic → italic only |
+| `- ` / `* ` / `+ ` list | `- ` / `* ` / `+ ` | Unordered list (unchanged) |
 | `[text](url)` | `text (url)` | Links (URLs auto-link in Google Chat) |
 | `![alt](url)` | `alt (url)` | Images |
 | `> quote` | plain text | Blockquote (strips prefix) |
 | `---` horizontal rule | removed | Not supported |
-| Table | plain text rows | Not supported |
+| Table | `Key: Value, Key: Value` | Converted to key-value pairs |
