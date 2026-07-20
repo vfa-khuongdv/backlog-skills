@@ -7,6 +7,7 @@ from convert import (
     is_table_separator,
     convert_heading,
     convert_unordered_list,
+    convert_links,
     convert_bold,
     convert_inline_code,
     convert_line,
@@ -179,6 +180,29 @@ class TestConvertInlineCode(unittest.TestCase):
         self.assertEqual(convert_inline_code('``'), '``')
 
 
+class TestConvertLinks(unittest.TestCase):
+    def test_basic_link(self):
+        self.assertEqual(convert_links('[text](url)'), 'text')
+
+    def test_link_in_sentence(self):
+        self.assertEqual(convert_links('see [docs](http://a.com) here'), 'see docs here')
+
+    def test_multiple_links(self):
+        self.assertEqual(convert_links('[a](1) and [b](2)'), 'a and b')
+
+    def test_image_passthrough(self):
+        self.assertEqual(convert_links('![alt](url)'), '![alt](url)')
+
+    def test_image_and_link_mixed(self):
+        self.assertEqual(convert_links('![img](a) and [link](b)'), '![img](a) and link')
+
+    def test_no_link(self):
+        self.assertEqual(convert_links('plain text'), 'plain text')
+
+    def test_empty_string(self):
+        self.assertEqual(convert_links(''), '')
+
+
 class TestConvertLine(unittest.TestCase):
     def test_heading_line(self):
         self.assertEqual(convert_line('# Title'), '* Title')
@@ -197,6 +221,12 @@ class TestConvertLine(unittest.TestCase):
 
     def test_plain_line_unchanged(self):
         self.assertEqual(convert_line('just text'), 'just text')
+
+    def test_link_in_line(self):
+        self.assertEqual(convert_line('[click](url) here'), 'click here')
+
+    def test_image_in_line(self):
+        self.assertEqual(convert_line('see ![img](url) now'), 'see ![img](url) now')
 
 
 class TestConvertMarkdownToBacklog(unittest.TestCase):
@@ -297,6 +327,31 @@ class TestConvertMarkdownToBacklog(unittest.TestCase):
     def test_list_with_bold_and_code(self):
         md = '- **important** `item`'
         expected = "\u30fb ''important'' \"item\""
+        self.assertEqual(convert_markdown_to_backlog(md), expected)
+
+    def test_link_conversion(self):
+        md = 'see [docs](url) here'
+        expected = 'see docs here'
+        self.assertEqual(convert_markdown_to_backlog(md), expected)
+
+    def test_image_passthrough(self):
+        md = '![logo](img.png) stays'
+        expected = '![logo](img.png) stays'
+        self.assertEqual(convert_markdown_to_backlog(md), expected)
+
+    def test_link_inside_heading(self):
+        md = '# [Home](/) page'
+        expected = '* Home page'
+        self.assertEqual(convert_markdown_to_backlog(md), expected)
+
+    def test_link_inside_list(self):
+        md = '- [docs](http://x) for help'
+        expected = '\u30fb docs for help'
+        self.assertEqual(convert_markdown_to_backlog(md), expected)
+
+    def test_image_in_heading(self):
+        md = '# ![logo](img.png) Title'
+        expected = '* ![logo](img.png) Title'
         self.assertEqual(convert_markdown_to_backlog(md), expected)
 
 

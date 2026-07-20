@@ -49,8 +49,9 @@ def convert_unordered_list(line: str) -> str:
 
 
 def convert_links(line: str) -> str:
-    """Remove markdown link syntax, keeping only the link text."""
-    return re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
+    """Remove markdown link syntax, keeping only the link text.
+    Images ![alt](url) are preserved untouched."""
+    return re.sub(r'(?<!!)\[([^\]]+)\]\([^\)]+\)', r'\1', line)
 
 
 def convert_bold(line: str) -> str:

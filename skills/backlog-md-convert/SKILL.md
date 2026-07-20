@@ -26,6 +26,11 @@ cat input.md | python3 convert.py
 | `- ` list | `・` | Unordered list |
 | `**text**` | `''text''` | Inline bold |
 | `[text](url)` | `text` | Strip links, keep text |
+| `![alt](url)` | `![alt](url)` | Images pass through (native) |
 | Table header | Append `|h` | Tables |
+| `*text*` / `_text_` | `*text*` / `_text_` | Italic pass through (native) |
+| `~~text~~` | `~~text~~` | Strikethrough pass through (native) |
+| `1. ` ordered list | `1. ` | Ordered list pass through (native) |
+| `- [ ]` / `- [x]` | `・ [ ]` / `・ [x]` | Checklist (bullet converted) |
 
 Reference: https://nulab.com/backlog/enterprise/help-guide/users-guide/rules-to-formatting-texts-markdown/
