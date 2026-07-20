@@ -25,6 +25,7 @@ cat input.md | python3 convert.py
 | `>` quote | `{quote}...{/quote}` | Blockquote |
 | `- ` list | `・` | Unordered list |
 | `**text**` | `''text''` | Inline bold |
+| `[text](url)` | `text` | Strip links, keep text |
 | Table header | Append `|h` | Tables |
 
 Reference: https://nulab.com/backlog/enterprise/help-guide/users-guide/rules-to-formatting-texts-markdown/

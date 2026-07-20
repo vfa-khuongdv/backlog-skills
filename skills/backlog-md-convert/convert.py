@@ -48,6 +48,11 @@ def convert_unordered_list(line: str) -> str:
     return line
 
 
+def convert_links(line: str) -> str:
+    """Remove markdown link syntax, keeping only the link text."""
+    return re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', line)
+
+
 def convert_bold(line: str) -> str:
     """Convert **bold** and __bold__ to ''bold'' (inline, not heading)."""
     line = re.sub(r'\*\*(.+?)\*\*', r"''\1''", line)
@@ -65,6 +70,7 @@ def convert_line(line: str) -> str:
     converted = convert_heading(line)
     if converted == line:
         converted = convert_unordered_list(line)
+    converted = convert_links(converted)
     converted = convert_bold(converted)
     return convert_inline_code(converted)
 
@@ -163,7 +169,7 @@ def convert_markdown_to_backlog(text: str) -> str:
         # --- Handle headings ---
         heading_result = convert_heading(line)
         if heading_result != line:
-            result.append(convert_inline_code(convert_bold(heading_result)))
+            result.append(convert_inline_code(convert_bold(convert_links(heading_result))))
             i += 1
             continue
 
@@ -171,12 +177,12 @@ def convert_markdown_to_backlog(text: str) -> str:
         if not is_table_row(line):
             list_result = convert_unordered_list(line)
             if list_result != line:
-                result.append(convert_inline_code(convert_bold(list_result)))
+                result.append(convert_inline_code(convert_bold(convert_links(list_result))))
                 i += 1
                 continue
 
         # --- Everything else: pass through ---
-        result.append(convert_inline_code(convert_bold(line)))
+        result.append(convert_inline_code(convert_bold(convert_links(line))))
         i += 1
 
     # Close any remaining open blocks
