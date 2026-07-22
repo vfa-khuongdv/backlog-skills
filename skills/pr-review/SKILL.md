@@ -86,6 +86,7 @@ Evaluate code changes against:
 ## Output
 
 - Do NOT post the review to GitHub automatically — wait for explicit user approval
+- **When the user approves and asks you to post the review**: Re-post the **exact same review text** you already generated above. Do NOT rewrite, rephrase, shorten, or regenerate the review — copy-paste it verbatim into the GitHub call. The user already read and approved the text you produced; changing it defeats the purpose of their approval.
 - If there is a bug, be direct and clear
 - Clearly communicate severity — don't overstate
 - Explain scenarios/environments/inputs needed for the bug to arise
