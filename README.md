@@ -2,6 +2,14 @@
 
 AI agent skills collection. Installable via `npx skills add vfa-khuongdv/backlog-skills`.
 
+## Installation
+
+```bash
+npx skills add vfa-khuongdv/backlog-skills
+```
+
+Works on **OpenCode** and **Claude Code**.
+
 ## Skills
 
 ### backlog-add-japanese
@@ -26,4 +34,12 @@ Convert Markdown to Google Chat formatting.
 
 ```
 > Convert RELEASE_NOTES.md for Google Chat, save as gc_RELEASE_NOTES.txt
+```
+
+### pr-review
+
+Comprehensive pull request review against requirements and code quality standards. Accepts a GitHub PR URL/PR number or reviews local uncommitted changes.
+
+```
+> Review this pull request: https://github.com/owner/repo/pull/123
 ```
