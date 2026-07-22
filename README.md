@@ -28,12 +28,16 @@ Convert Markdown to Backlog wiki format.
 > Convert RELEASE_NOTES.md to Backlog wiki format, save as RELEASE_NOTES.txt
 ```
 
-### google-chat-md-convert
-
-Convert Markdown to Google Chat formatting.
-
 ```
 > Convert RELEASE_NOTES.md for Google Chat, save as gc_RELEASE_NOTES.txt
+```
+
+### pr-description
+
+Generate Pull Request descriptions from git diff between feature and base branches. Auto-detects ticket number from branch name. See [EXAMPLES.md](skills/pr-description/EXAMPLES.md) for sample output.
+
+```
+> Create PR description from branch feature/20344-coin-analytics against develop
 ```
 
 ### pr-review
