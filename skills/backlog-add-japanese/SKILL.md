@@ -1,6 +1,6 @@
 ---
 name: backlog-add-japanese
-description: Add **English and **Japanese sections to Backlog-formatted content. Use when user needs to create a Japanese-localized version of English Backlog wiki text (e.g., README.txt -> README-output.txt).
+description: Add `**` sections to Backlog-formatted content. Use when user needs to create a Japanese-localized version of English Backlog wiki text (e.g., README.txt -> README-output.txt).
 ---
 
 # Add Japanese Section for Backlog
@@ -17,10 +17,8 @@ Convert a Backlog-formatted text file by adding both English and Japanese sectio
 ### Processing steps
 
 1. Read the input file
-2. Add section marker `**English` at the very top before the original content
-3. Preserve ALL original content exactly as-is below `**English`
-4. Add section marker `**Japanese` after the English section
-5. Translate the body content to Japanese, keeping Backlog formatting intact
+2. Add section marker `**` after the English section
+3. Translate the body content to Japanese, keeping Backlog formatting intact
 
 ### Format preservation (CRITICAL)
 
@@ -43,15 +41,13 @@ The Japanese translation MUST preserve the exact same Backlog wiki formatting st
 ### Output structure (NO empty lines between sections)
 
 ```
-**English
 [original content unchanged]
-**Japanese
+**
 [translated content with same Backlog formatting]
 ```
 
-- `**English` immediately followed by original content (no blank line)
-- Last line of English section immediately followed by `**Japanese` (no blank line)
-- `**Japanese` immediately followed by Japanese content (no blank line)
+- Last line of English section immediately followed by `**` (no blank line)
+- `**` immediately followed by Japanese content (no blank line)
 
 ## Usage
 
