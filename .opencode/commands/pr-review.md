@@ -21,7 +21,7 @@ If `$ARGUMENTS` is a GitHub Pull Request URL (for example, `https://github.com/o
    git checkout pr-<number>
    ```
 
-4. Update the local branch:
+4. Update the local branch (in case the PR author force-pushed since opening):
    ```bash
    git pull origin <head-branch>
    ```
@@ -49,7 +49,9 @@ If `$ARGUMENTS` is empty, review the current local uncommitted changes:
 
 ```bash
 git diff --stat
+git diff --cached --stat
 git diff
+git diff --cached
 git log --oneline -10
 ```
 

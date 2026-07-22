@@ -1,6 +1,6 @@
 ---
 name: "pr-review"
-description: "Senior code reviewer that performs comprehensive pull request reviews using the review_code skill to assess functionality, security, code quality, and error handling."
+description: "Senior code reviewer that performs comprehensive pull request reviews assessing functionality, security, code quality, and error handling."
 permission:
   edit: deny
   bash:
