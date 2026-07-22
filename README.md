@@ -41,20 +41,5 @@ Convert Markdown to Google Chat formatting.
 Comprehensive pull request review against requirements and code quality standards. Accepts a GitHub PR URL/PR number or reviews local uncommitted changes.
 
 ```
-> /pr-review https://github.com/owner/repo/pull/123
+> Review this pull request: https://github.com/owner/repo/pull/123
 ```
-
-## Platform-Specific Setup
-
-### OpenCode — Agents & Commands
-
-Skills are installed automatically. For the `/pr-review` command and agent persona:
-
-1. **Agent** — Copy `agents/code-review.md` to `~/.config/opencode/agents/pr-review.md`
-2. **Command** — Copy `.opencode/commands/pr-review.md` to your project's `.opencode/commands/` (or `~/.config/opencode/commands/` for global)
-
-### Claude Code — Commands
-
-Skills are installed automatically. For the `/pr-review` command:
-
-Copy `.claude/commands/pr-review.md` to your project's `.claude/commands/` (or `~/.claude/commands/` for global).
